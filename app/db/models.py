@@ -1,5 +1,6 @@
 from db.database import Base
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, ForeignKey, Integer, String, Boolean
+from sqlalchemy.orm import relationship
 
 
 class DbUser(Base):
@@ -8,3 +9,16 @@ class DbUser(Base):
     username = Column(String)
     email = Column(String, unique=True)
     password = Column(String)
+
+    items = relationship("DbArticle", back_population="users")
+
+
+class DbArticle(Base):
+    __tablename__ = "articles"
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String)
+    content = Column(String)
+    published = Column(Boolean)
+
+    user_id = ForeignKey(Integer, "users.id")
+    user = relationship("DbUser", back_population="items")
