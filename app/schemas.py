@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-# Article in UserDisplay
+# Article inside UserDisplay
 class Article(BaseModel):
     title: str
     content: str
@@ -26,7 +26,7 @@ class UserDisplay(BaseModel):
         orm_mode = True
 
 
-# User in ArticleDisplay
+# User inside ArticleDisplay
 class User(BaseModel):
     id: int
     username: str

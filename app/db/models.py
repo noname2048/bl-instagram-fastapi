@@ -10,7 +10,7 @@ class DbUser(Base):
     email = Column(String, unique=True)
     password = Column(String)
 
-    items = relationship("DbArticle", back_population="users")
+    items = relationship("DbArticle", back_populates="users")
 
 
 class DbArticle(Base):
@@ -20,5 +20,5 @@ class DbArticle(Base):
     content = Column(String)
     published = Column(Boolean)
 
-    user_id = ForeignKey(Integer, "users.id")
-    user = relationship("DbUser", back_population="items")
+    user_id = Column(Integer, ForeignKey("users.id"))
+    user = relationship("DbUser", back_populates="items")
