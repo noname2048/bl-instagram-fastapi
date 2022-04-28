@@ -1,17 +1,19 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from app.exceptions import StoryException
-from db import models
-from db.database import engine
+from app.db import models
+from app.db.database import engine
 
-from router import article, product, user
+from app.router import article, product, user
 
 app = FastAPI()
 
 
-@app.include_router(article.router)
-@app.include_router(product.router)
-@app.include_router(user.router)
+app.include_router(article.router)
+app.include_router(product.router)
+app.include_router(user.router)
+
+
 @app.get("/")
 async def index():
     return {"message": "hello world"}

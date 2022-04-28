@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
-from schemas import ArticleBase, ArticleDisplay
-from db.database import get_db
-from db import db_article
+from app.schemas import ArticleBase, ArticleDisplay
+from app.db.database import get_db
+from app.db import db_article
 from sqlalchemy.orm.session import Session
 
 router = APIRouter(prefix="/article", tags=["article"])
