@@ -4,9 +4,14 @@ from app.exceptions import StoryException
 from db import models
 from db.database import engine
 
+from router import article, product, user
+
 app = FastAPI()
 
 
+@app.include_router(article.router)
+@app.include_router(product.router)
+@app.include_router(user.router)
 @app.get("/")
 async def index():
     return {"message": "hello world"}
