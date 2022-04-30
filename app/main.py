@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from app.exceptions import StoryException
 from app.db import models
 from app.db.database import engine
@@ -20,6 +21,7 @@ app.include_router(file.router)
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_headers=["*"], allow_methods=["*"]
 )
+app.mount("/files", StaticFiles(directory="./app/files"), name="/files")
 
 
 @app.get("/")
