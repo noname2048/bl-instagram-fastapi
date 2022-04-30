@@ -5,16 +5,17 @@ from app.exceptions import StoryException
 from app.db import models
 from app.db.database import engine
 
-from app.router import article, product, user
+from app.router import article, product, user, file
 from app.auth import authentication
 
 app = FastAPI()
 
 
+app.include_router(authentication.router)
 app.include_router(article.router)
 app.include_router(product.router)
 app.include_router(user.router)
-app.include_router(authentication.router)
+app.include_router(file.router)
 
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_headers=["*"], allow_methods=["*"]
