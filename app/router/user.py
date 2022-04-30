@@ -4,6 +4,7 @@ from app.schemas import UserBase, UserDisplay
 from sqlalchemy.orm import Session
 from app.db.database import get_db
 from app.db import db_user
+from app.auth.oauth2 import get_current_user
 
 router = APIRouter(prefix="/user", tags=["user"])
 
@@ -15,25 +16,41 @@ async def create_user(request: UserBase, db: Session = Depends(get_db)):
 
 # Read all users
 @router.get("/", response_model=List[UserDisplay])
-async def read_all_users(db: Session = Depends(get_db)):
+async def read_all_users(
+    db: Session = Depends(get_db),
+    current_user: UserBase = Depends(get_current_user),
+):
     return db_user.get_all_users()
 
 
 # Read one user
 @router.get("/{:id}", response_model=UserDisplay)
-async def read_one_user(id: int, db: Session = Depends(get_db)):
+async def read_one_user(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: UserBase = Depends(get_current_user),
+):
     return db_user.get_user(db, id)
 
 
 # Update user
 @router.post("/{id}/update")
-async def update_user(id: int, request: UserBase, db: Session = Depends(get_db)):
+async def update_user(
+    id: int,
+    request: UserBase,
+    db: Session = Depends(get_db),
+    current_user: UserBase = Depends(get_current_user),
+):
     db_user.update_user(db, id, request)
     return "ok"
 
 
 # Delete user
 @router.get("/delete/{id}")
-async def delete_user(id: int, db: Session = Depends(get_db)):
+async def delete_user(
+    id: int,
+    db: Session = Depends(get_db),
+    current_user: UserBase = Depends(get_current_user),
+):
     db_user.delete_user(db, id)
     return "ok"
