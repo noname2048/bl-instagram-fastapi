@@ -10,7 +10,7 @@ class DbUser(Base):
     email = Column(String, unique=True)
     password = Column(String)
 
-    items = relationship("DbArticle", back_populates="users")
+    items = relationship("DbArticle", back_populates="user")
 
 
 class DbArticle(Base):

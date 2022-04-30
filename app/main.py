@@ -6,6 +6,7 @@ from app.db import models
 from app.db.database import engine
 
 from app.router import article, product, user
+from app.auth import authentication
 
 app = FastAPI()
 
@@ -13,10 +14,10 @@ app = FastAPI()
 app.include_router(article.router)
 app.include_router(product.router)
 app.include_router(user.router)
-
+app.include_router(authentication.router)
 
 app.add_middleware(
-    CORSMiddleware, allowed_origisn=["*"], allowed_headers=["*"], allowed_methods=["*"]
+    CORSMiddleware, allow_origins=["*"], allow_headers=["*"], allow_methods=["*"]
 )
 
 
