@@ -4,3 +4,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# Pytest
+.pytest_cache
+# DB
+bl-instagram-fastapi.db
