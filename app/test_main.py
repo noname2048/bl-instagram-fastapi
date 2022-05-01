@@ -25,7 +25,7 @@ def test_auth_success():
 
 
 def test_post_article():
-    auth = client.post("/token", data={"username": "", "password": ""})
+    auth = client.post("/token", data={"username": "cat", "password": "cat"})
     access_token = auth.json().get("access_token")
     assert access_token
 
