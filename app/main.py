@@ -1,5 +1,5 @@
 from fastapi import FastAPI, Request, status
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from app.exceptions import StoryException
@@ -11,6 +11,9 @@ from app.templates import templates
 from app.auth import authentication
 
 import time
+
+from app.client import html
+from fastapi.websockets import WebSocket
 
 app = FastAPI()
 
@@ -31,7 +34,7 @@ app.mount(
 )
 
 
-@app.get("/")
+@app.get("/hello")
 async def index():
     return {"message": "hello world"}
 
@@ -42,6 +45,24 @@ def story_exception_handler(request: Request, exc: StoryException):
         status_code=status.HTTP_418_IM_A_TEAPOT,
         content={"detail": exc.name},
     )
+
+
+@app.get("/")
+async def get():
+    return HTMLResponse(html)
+
+
+clients = []
+
+
+@app.websocket("/chat")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    clients.append(websocket)
+    while True:
+        data = await websocket.receive_text()
+        for client in clients:
+            await client.send_text(data)
 
 
 models.Base.metadata.create_all(engine)
