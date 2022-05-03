@@ -7,11 +7,13 @@ from app.db import models
 from app.db.database import engine
 
 from app.router import article, product, user, file
+from app.templates import templates
 from app.auth import authentication
 
 app = FastAPI()
 
 
+app.include_router(templates.router)
 app.include_router(authentication.router)
 app.include_router(article.router)
 app.include_router(product.router)
@@ -21,7 +23,10 @@ app.include_router(file.router)
 app.add_middleware(
     CORSMiddleware, allow_origins=["*"], allow_headers=["*"], allow_methods=["*"]
 )
-app.mount("/files", StaticFiles(directory="./app/files"), name="/files")
+app.mount("/files", StaticFiles(directory="./app/files"), name="files")
+app.mount(
+    "/templates/static", StaticFiles(directory="./app/templates/static"), name="static"
+)
 
 
 @app.get("/")
