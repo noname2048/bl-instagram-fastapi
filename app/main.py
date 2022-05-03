@@ -10,6 +10,8 @@ from app.router import article, product, user, file
 from app.templates import templates
 from app.auth import authentication
 
+import time
+
 app = FastAPI()
 
 
@@ -43,3 +45,12 @@ def story_exception_handler(request: Request, exc: StoryException):
 
 
 models.Base.metadata.create_all(engine)
+
+
+@app.middleware("http")
+async def add_middleware(request: Request, call_next):
+    start_time = time.time()
+    response = await call_next(request)
+    duration = time.time() - start_time
+    response.headers["duration"] = str(duration)
+    return response
