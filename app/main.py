@@ -6,7 +6,7 @@ from app.exceptions import StoryException
 from app.db import models
 from app.db.database import engine
 
-from app.router import article, product, user, file
+from app.router import article, product, user, file, dependencies
 from app.templates import templates
 from app.auth import authentication
 
@@ -17,7 +17,7 @@ from fastapi.websockets import WebSocket
 
 app = FastAPI()
 
-
+app.include_router(dependencies.router)
 app.include_router(templates.router)
 app.include_router(authentication.router)
 app.include_router(article.router)
