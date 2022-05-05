@@ -1,1 +1,3 @@
 MyAPI: templates read for product for id 3
+MyApi: a
+	http://localhost:8000/dependencies/?test=123&separator=ee&tag=MyApi&message=a
