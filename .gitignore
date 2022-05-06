@@ -8,3 +8,6 @@ __pycache__/
 .pytest_cache
 # DB
 bl-instagram-fastapi.db
+*.db
+# IDE
+.vscode
