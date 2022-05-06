@@ -11,3 +11,5 @@ bl-instagram-fastapi.db
 *.db
 # IDE
 .vscode
+# media
+insta/images
