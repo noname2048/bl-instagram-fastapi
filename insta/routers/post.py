@@ -46,9 +46,10 @@ def upload_image(image: UploadFile = File(...)):
     rand_str = "".join(random.choice(letters) for i in range(6))
     new = f"_{rand_str}."
     filename = new.join(image.filename.rsplit(".", 1))
-    path = f"insta/images/{filename}"
+    folder = "insta"
+    path = f"images/{filename}"
 
-    with open(path, "wb+") as buffer:
+    with open("/".join([folder, path]), "wb+") as buffer:
         shutil.copyfileobj(image.file, buffer)
 
     return {"filename": path}
