@@ -19,7 +19,7 @@ def root():
     return "Hello world!"
 
 
-origins = ["http://localhost:3000"]
+origins = ["http://localhost:3000", "http://localhost:3001"]
 
 app.add_middleware(
     CORSMiddleware,
