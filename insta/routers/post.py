@@ -41,7 +41,7 @@ def posts(db: Session = Depends(get_db)):
 
 
 @router.post("/image")
-def upload_image(image: UploadFile = File(...)):
+def upload_image(image: UploadFile = File(...), current_user=Depends(get_current_user)):
     letters = string.ascii_letters
     rand_str = "".join(random.choice(letters) for i in range(6))
     new = f"_{rand_str}."
