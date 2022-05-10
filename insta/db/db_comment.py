@@ -8,7 +8,7 @@ from fastapi import HTTPException, status
 def create(db: Session, request: CommentBase) -> DbComment:
     new_comment = DbComment(
         text=request.text,
-        username=request.useranme,
+        username=request.username,
         post_id=request.post_id,
         timestamp=datetime.utcnow(),
     )
