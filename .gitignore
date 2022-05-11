@@ -13,3 +13,5 @@ bl-instagram-fastapi.db
 .vscode
 # media
 insta/images
+# Mac
+.DS_Store
